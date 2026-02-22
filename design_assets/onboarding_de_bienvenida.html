@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding de Bienvenida</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-shadow {
+            box-shadow: 0 4px 24px rgba(43, 108, 238, 0.15);
+        }
+        .gradient-mesh {
+            background-color: #101622;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(43, 108, 238, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(43, 108, 238, 0.1) 0px, transparent 50%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden">
+<!-- Main Container (Phone Mockup/Size) -->
+<div class="relative flex h-screen w-full max-w-[430px] mx-auto flex-col gradient-mesh overflow-hidden">
+<!-- Top App Bar / Skip Action -->
+<div class="flex items-center justify-end px-6 pt-6 pb-2">
+<button class="text-primary text-base font-semibold leading-normal tracking-tight hover:opacity-80 transition-opacity">
+                Saltar
+            </button>
+</div>
+<!-- Hero Illustration Section -->
+<div class="flex-1 flex flex-col items-center justify-center px-6">
+<div class="relative w-full aspect-square max-w-[320px] flex items-center justify-center">
+<!-- Decorative Glow -->
+<div class="absolute inset-0 bg-primary/10 rounded-full blur-[60px]"></div>
+<!-- Placeholder Illustration Wrapper -->
+<div class="relative w-full h-full bg-cover bg-center rounded-xl overflow-hidden shadow-2xl" data-alt="Ilustración minimalista de lista de tareas y productividad" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDlRE7KSKN6RNOgmbnE9vGOAdi0n6aUM4_yLzIuDZRMJV4RnrpYM4aD7aYeHbiRmyurFFCwNOcx616pIaWpPHR4DScl5N_r24_69_0ruQVk0zdqwGvuYIW1u3fW5rBLP4ZJ1z2FHQq3IpAd04LNNo_1_l4mtp2B_WybNDs1poQ3Kt0IXSmFH49zbQOOM6T-maxR7BJCjDya9_gIuYDoa0737dpcteuFSJsMT4H2m7wFZ33trNohPf8JXWOTYZSq9TxqzW8wyK-ykKg");'>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-transparent to-transparent"></div>
+<!-- Floating Icons to simulate UI elements -->
+<div class="absolute top-8 left-8 bg-primary p-3 rounded-lg shadow-lg">
+<span class="material-symbols-outlined text-white text-2xl">done_all</span>
+</div>
+<div class="absolute bottom-12 right-8 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10">
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-green-400"></div>
+<div class="h-2 w-16 bg-white/30 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Text Content -->
+<div class="px-8 flex flex-col items-center">
+<h1 class="text-white tracking-tight text-3xl font-bold leading-tight text-center pb-4">
+                Organiza tu día
+            </h1>
+<p class="text-slate-400 text-base font-normal leading-relaxed text-center max-w-[300px]">
+                Toma el control de tus tareas, establece prioridades y alcanza tus metas diarias con facilidad.
+            </p>
+</div>
+<!-- Pagination Dots -->
+<div class="flex w-full flex-row items-center justify-center gap-2.5 py-10">
+<div class="h-2 w-6 rounded-full bg-primary"></div>
+<div class="h-2 w-2 rounded-full bg-slate-700"></div>
+<div class="h-2 w-2 rounded-full bg-slate-700"></div>
+</div>
+<!-- Footer / CTA -->
+<div class="px-6 pb-12 w-full">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all ios-shadow flex items-center justify-center gap-2 active:scale-[0.98]">
+                Comenzar
+                <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+<!-- Safe Area Spacer -->
+<div class="h-2"></div>
+</div>
+<!-- Background Decorative Elements -->
+<div class="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[80px]"></div>
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-primary/5 rounded-full blur-[60px]"></div>
+</div>
+</body></html>

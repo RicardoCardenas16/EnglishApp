@@ -1,0 +1,12 @@
+﻿# Gitignore
+node_modules/
+**/node_modules/
+db.sqlite3
+.env
+backend/API.env
+backend/.gemini/
+nodejs/
+dist/
+*.pyc
+__pycache__/
+

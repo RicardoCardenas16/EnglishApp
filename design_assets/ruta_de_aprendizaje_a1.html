@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ruta de Aprendizaje A1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .path-line {
+            position: absolute;
+            left: 27px;
+            top: 40px;
+            bottom: -20px;
+            width: 2px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #2b6cee 0,
+                #2b6cee 8px,
+                transparent 8px,
+                transparent 16px
+            );
+            z-index: 0;
+        }
+        .path-line-solid {
+            background: #2b6cee;
+        }
+        .path-line-dim {
+            background: #282e39;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Header Section -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="flex items-center gap-3">
+<div class="text-primary cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+</div>
+<div>
+<h1 class="text-xl font-bold leading-tight tracking-tight">Nivel A1</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Principiante</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+<span class="text-primary text-xs font-bold uppercase tracking-wider">12/45 lecciones</span>
+</div>
+</div>
+</div>
+<!-- Global Progress Bar -->
+<div class="w-full h-1 bg-slate-200 dark:bg-slate-800">
+<div class="h-full bg-primary" style="width: 27%;"></div>
+</div>
+</header>
+<!-- Main Content Area (Mobile Viewport) -->
+<main class="flex-1 overflow-y-auto max-w-md mx-auto w-full pb-24">
+<!-- Unit 1 -->
+<section class="p-4">
+<div class="mb-6">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold text-primary">Unidad 1: Los Saludos</h2>
+<span class="text-xs font-medium text-emerald-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">check_circle</span> Completada
+                    </span>
+</div>
+<div class="bg-slate-100 dark:bg-[#1c1f27] rounded-xl overflow-hidden mb-6 border border-slate-200 dark:border-slate-800">
+<div class="h-32 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0); background-size: 20px 20px;"></div>
+<span class="material-symbols-outlined text-6xl text-primary/40">forum</span>
+</div>
+<div class="p-4">
+<p class="text-sm text-slate-600 dark:text-slate-400">Domina las bases de la cortesía y las presentaciones iniciales.</p>
+</div>
+</div>
+<!-- Lessons Path Unit 1 -->
+<div class="space-y-8 relative">
+<!-- Lesson 1 -->
+<div class="flex items-start gap-4 relative z-10">
+<div class="path-line path-line-solid"></div>
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div class="flex-1 pt-1">
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Hola y Adiós</h3>
+<div class="flex items-center gap-1 text-[10px] font-bold uppercase text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-sm">book</span> Reading
+                                </div>
+</div>
+<p class="text-sm text-slate-500">Saludos formales e informales</p>
+</div>
+</div>
+<!-- Lesson 2 -->
+<div class="flex items-start gap-4 relative z-10">
+<div class="path-line path-line-solid"></div>
+<div class="size-14 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div class="flex-1 pt-1">
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Presentaciones</h3>
+<div class="flex items-center gap-1 text-[10px] font-bold uppercase text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-sm">mic</span> Speaking
+                                </div>
+</div>
+<p class="text-sm text-slate-500">¿Cómo te llamas?</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Unit 2 -->
+<section class="p-4 bg-slate-50/50 dark:bg-white/[0.02]">
+<div class="mb-6">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold text-primary">Unidad 2: En la Escuela</h2>
+<span class="text-xs font-medium text-slate-500 uppercase tracking-widest">En Progreso</span>
+</div>
+<div class="bg-slate-100 dark:bg-[#1c1f27] rounded-xl overflow-hidden mb-6 border border-slate-200 dark:border-slate-800">
+<div class="h-32 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0); background-size: 20px 20px;"></div>
+<span class="material-symbols-outlined text-6xl text-primary/40">school</span>
+</div>
+</div>
+<!-- Lessons Path Unit 2 -->
+<div class="space-y-8 relative">
+<!-- Lesson 3 (Current) -->
+<div class="flex items-start gap-4 relative z-10">
+<div class="path-line path-line-dim"></div>
+<div class="size-14 rounded-full bg-primary border-4 border-white dark:border-background-dark flex items-center justify-center text-white shadow-xl shadow-primary/40 scale-110">
+<span class="material-symbols-outlined">play_arrow</span>
+</div>
+<div class="flex-1 pt-1">
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Objetos de Clase</h3>
+<div class="flex items-center gap-1 text-[10px] font-bold uppercase text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+<span class="material-symbols-outlined text-sm">headphones</span> Listening
+                                </div>
+</div>
+<p class="text-sm text-slate-500">Vocabulario escolar común</p>
+</div>
+</div>
+<!-- Lesson 4 (Locked) -->
+<div class="flex items-start gap-4 relative z-10 opacity-60">
+<div class="path-line path-line-dim"></div>
+<div class="size-14 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<div class="flex-1 pt-1">
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Escribir una nota</h3>
+<div class="flex items-center gap-1 text-[10px] font-bold uppercase text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-sm">edit</span> Writing
+                                </div>
+</div>
+<p class="text-sm text-slate-500">Práctica de redacción básica</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Unit 3 -->
+<section class="p-4 opacity-40">
+<div class="mb-6">
+<h2 class="text-lg font-bold text-slate-500 mb-4">Unidad 3: La Familia</h2>
+<div class="flex items-start gap-4 relative z-10">
+<div class="size-14 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<div class="flex-1 pt-1">
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Mi Árbol Genealógico</h3>
+<p class="text-sm text-slate-500">Hablando sobre parientes</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full bg-[#1c1f27] border-t border-[#282e39] pb-safe">
+<div class="flex max-w-md mx-auto px-4 py-2 justify-around">
+<a class="flex flex-col items-center gap-1 py-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">map</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Ruta</span>
+</a>
+<a class="flex flex-col items-center gap-1 py-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">target</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Práctica</span>
+</a>
+<a class="flex flex-col items-center gap-1 py-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Perfil</span>
+</a>
+<a class="flex flex-col items-center gap-1 py-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Ajustes</span>
+</a>
+</div>
+</nav>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-6 size-14 bg-primary text-white rounded-full shadow-2xl shadow-primary/50 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</button>
+</body></html>

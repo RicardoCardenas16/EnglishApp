@@ -1,0 +1,462 @@
+[
+    {
+        "theme": "Breaking News & Media Literacy",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: The Speed of News",
+                "description": "Analyzing the rapid cycle of modern journalism.",
+                "transcript": "The traditional morning newspaper is becoming a relic of the past as the 24-hour news cycle takes over. Today, information travels at the speed of a 'like' or a 'share'. However, this speed comes with a significant trade-off: accuracy. In the rush to be first, many outlets bypass the rigorous fact-checking that once defined credible journalism. Media literacy is now a vital skill for every citizen, involving the ability to question the source, the bias, and the intent behind every headline we consume.",
+                "context": "Contemporary Media Analysis"
+            },
+            "READING": {
+                "title": "Reading: Navigating Post-Truth Journalism",
+                "description": "A deep dive into echo chambers and misinformation.",
+                "content": "In an era often described as 'post-truth', the distinction between objective facts and subjective opinions has become increasingly blurred. The rise of social media algorithms has facilitated the creation of echo chambers, where individuals are primarily exposed to viewpoints that confirm their existing biases. Misinformation and 'fake news' are not just annoying; they are a threat to democratic processes. To combat this, one must develop critical media literacy. This involves cross-referencing information, identifying logical fallacies, and understanding how emotional triggers are used in clickbait headlines. A healthy democracy relies on an informed public capable of discerning truth from manipulation."
+            },
+            "SPEAKING": {
+                "title": "Speaking: News and Society",
+                "questions": [
+                    {
+                        "text": "Do you think social media has improved or damaged the quality of news?",
+                        "ideal_answer": "It's a double-edged sword; while it democratizes information, it also spreads misinformation rapidly.",
+                        "feedback": "Use 'double-edged sword' for nuance."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: Fact-Checking Report",
+                "prompt": "Write a 150-word report on the dangers of echo chambers in modern society.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Media Literacy",
+                "questions": [
+                    {
+                        "question": "What is an 'echo chamber'?",
+                        "options": [
+                            "A room for recording news",
+                            "An environment where only existing beliefs are reinforced",
+                            "A technical term for loud audio"
+                        ],
+                        "answer": "An environment where only existing beliefs are reinforced",
+                        "feedback": "Echo chambers limit our exposure to diverse viewpoints."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "Literary Criticism & Modern Books",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: The Death of the Novel?",
+                "description": "A discussion on why literature still matters.",
+                "transcript": "Critics have been predicting the 'death of the novel' for decades, yet literature continues to thrive in new forms. From digital ebooks to long-form storytelling in podcasts, the essence of the narrative remains unchanged. Literature provides a unique window into the human condition, offering a level of empathy that shorter formats cannot match. Whether it's a classic masterpiece or a modern best-seller, books challenge our perceptions and force us to confront complex moral dilemmas.",
+                "context": "Modern Literature & Culture"
+            },
+            "READING": {
+                "title": "Reading: The Evolution of the Protagonist",
+                "description": "How characters have changed from the 19th century to today.",
+                "content": "The concept of the hero in literature has undergone a significant transformation. In the Victorian era, protagonists were often moral paragons, representing Idealized virtues. However, modern literature has embraced the 'anti-hero'—characters who are deeply flawed, morally ambiguous, and profoundly relatable. This shift reflects a broader societal movement toward psychological realism and the acceptance of human complexity. Readers today are less interested in perfection and more drawn to characters who struggle with their identities and the gray areas of morality. This evolution allows literature to explore the darker, more intricate aspects of our shared experience."
+            },
+            "SPEAKING": {
+                "title": "Speaking: Book Review",
+                "questions": [
+                    {
+                        "text": "What is the most impactful book you have ever read, and why?",
+                        "ideal_answer": "The most impactful book was '1984' because of its chillingly relevant warnings about surveillance and truth.",
+                        "feedback": "Focus on 'emotional impact' and 'thematic relevance'."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: Character Analysis",
+                "prompt": "Write a 150-word analysis of a character from a book you enjoyed.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Literature",
+                "questions": [
+                    {
+                        "question": "What character type is common in modern literature?",
+                        "options": [
+                            "The moral paragon",
+                            "The anti-hero",
+                            "The invincible god"
+                        ],
+                        "answer": "The anti-hero",
+                        "feedback": "Modern stories favor flawed, realistic characters."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "The Modern Job Interview & Professional Branding",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: Digital First Impressions",
+                "description": "Importance of professional branding.",
+                "transcript": "In today's professional world, your brand often precedes you. Recruiters scan profiles in seconds. A robust digital footprint is a necessity. During an interview, you're evaluated on technical proficiency and how you communicate your unique value proposition. Branding is about consistency and authenticity.",
+                "context": "Career Development"
+            },
+            "READING": {
+                "title": "Reading: Recruitment Paradigm Shift",
+                "description": "How hiring has changed.",
+                "content": "Recruitment has shifted from static CVs to dynamic digital identities. Organizations use AI-driven tools to filter candidates. 'Soft skills' like emotional intelligence are paramount. Behavioral interviewing techniques require candidates to tell compelling narratives of growth."
+            },
+            "SPEAKING": {
+                "title": "Speaking: Your Value",
+                "questions": [
+                    {
+                        "text": "Describe your unique value proposition.",
+                        "ideal_answer": "I bridge the gap between technical teams and stakeholders.",
+                        "feedback": "Use strong action verbs."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: Strategy",
+                "prompt": "Write 150 words on digital branding for career advancement.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Branding",
+                "questions": [
+                    {
+                        "question": "What is the 'six-second rule'?",
+                        "options": [
+                            "Answer time",
+                            "Recruiter scanning time",
+                            "Video delay"
+                        ],
+                        "answer": "Recruiter scanning time",
+                        "feedback": "First impressions are vital."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "Environmental Ethics & Sustainability",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: Systemic Sustainability",
+                "description": "Broader perspectives on green ethics.",
+                "transcript": "Environmental ethics requires a broader perspective than just recycling. It's about a circular economy and holding corporations accountable. Greenwashing–misleading environmental claims–is a major issue. Our power lies in advocacy for systemic change.",
+                "context": "Environmental Issues"
+            },
+            "READING": {
+                "title": "Reading: Greenwashing Exposed",
+                "description": "Deception in sustainability marketing.",
+                "content": "Many companies claim sustainability to mask poor practices. This is greenwashing. To find real commitment, consumers need third-party certifications. Climate justice recognizes that marginalized communities feel environmental impacts most."
+            },
+            "SPEAKING": {
+                "title": "Speaking: Responsibility",
+                "questions": [
+                    {
+                        "text": "Who is more responsible for climate change: individuals or corporations?",
+                        "ideal_answer": "Corporations have larger systemic impact.",
+                        "feedback": "Use connectors like 'Furthermore'."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: Proposal",
+                "prompt": "Propose a 150-word sustainability initiative for your workplace.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Eco Ethics",
+                "questions": [
+                    {
+                        "question": "What is Greenwashing?",
+                        "options": [
+                            "Cleaning plastic",
+                            "Misleading environmental claims",
+                            "A new recycling method"
+                        ],
+                        "answer": "Misleading environmental claims",
+                        "feedback": "It is a deceptive marketing tactic."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "Global Travel & Cultural Adaptation",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: The Psychology of Travel",
+                "description": "Challenges of living abroad.",
+                "transcript": "Culture shock follows a curve: honeymoon, frustration, adjustment, and mastery. Cultural Intelligence (CQ) is the ability to function across national and organizational cultures. It's about being observant and flexible without losing identity.",
+                "context": "Intercultural Psychology"
+            },
+            "READING": {
+                "title": "Reading: The U-Curve Model",
+                "description": "Sociological phases of adjustment.",
+                "content": "Cultural adaptation involves navigating different value systems. The U-Curve model shows excitement giving way to anxiety. Overcoming this requires resilience and empathy for different social norms and power dynamics."
+            },
+            "SPEAKING": {
+                "title": "Speaking: Cultural Conflict",
+                "questions": [
+                    {
+                        "text": "How do you handle cultural conflicts?",
+                        "ideal_answer": "I keep an open mind and seek context.",
+                        "feedback": "Good use of 'open mind'."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: Blog",
+                "prompt": "Write a 150-word blog offering advice to someone moving to your country.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Culture",
+                "questions": [
+                    {
+                        "question": "What stands for CQ?",
+                        "options": [
+                            "Quality",
+                            "Intelligence",
+                            "Quota"
+                        ],
+                        "answer": "Intelligence",
+                        "feedback": "Cultural Intelligence is vital for travel."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "The Impact of AI & Future of Work",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: Human-AI Collaboration",
+                "description": "Reshaping the workforce.",
+                "transcript": "AI is automating repetitive tasks, allowing humans to focus on strategy and creativity. This requires upskilling and reskilling. Ethical AI must be transparent and bias-free to augment human potential.",
+                "context": "Technological Advancement"
+            },
+            "READING": {
+                "title": "Reading: Quintessential Human Traits",
+                "description": "What AI cannot replace.",
+                "content": "Automation struggles to replace empathy, social perception, and moral reasoning. 'Augmented intelligence' is where technology and humans work in tandem. AI in management raises concerns about accountability and fairness."
+            },
+            "SPEAKING": {
+                "title": "Speaking: AI Concerns",
+                "questions": [
+                    {
+                        "text": "Are you concerned about AI replacing jobs?",
+                        "ideal_answer": "Roles will change, requiring us to manage AI tools.",
+                        "feedback": "Use 'From my perspective'."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: AI Ethics",
+                "prompt": "Write a 150-word essay on one ethical concern of AI in the workplace.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Tech Future",
+                "questions": [
+                    {
+                        "question": "What is Augmented Intelligence?",
+                        "options": [
+                            "Replacement",
+                            "Humans and tech working together",
+                            "Military tech"
+                        ],
+                        "answer": "Humans and tech working together",
+                        "feedback": "It's about collaboration."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "Psychology & Emotional Intelligence",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: The Power of EQ",
+                "description": "Why emotional quotient matters more than IQ.",
+                "transcript": "While IQ might get you the job, EQ—Emotional Quotient—is what gets you promoted. Emotional intelligence involves four pillars: self-awareness, self-regulation, social awareness, and relationship management. It is the ability to recognize, understand, and manage our own emotions while influencing the emotions of others. Leaders with high EQ create psychologically safe environments where teams can innovate without fear of failure. Unlike IQ, which is relatively fixed, EQ can be developed over time through intentional practice and reflection.",
+                "context": "Psychological Development"
+            },
+            "READING": {
+                "title": "Reading: The Science of Self-Regulation",
+                "description": "Understanding cognitive behavioral patterns.",
+                "content": "Self-regulation is the cornerstone of professional and personal maturity. It is the ability to monitor and manage your energy states, emotions, thoughts, and behaviors in ways that are acceptable and produce positive results such as well-being, loving relationships, and learning. In a high-pressure workplace, self-regulation prevents impulsive reactions that can damage professional relationships. Neuroscientific research suggests that practicing mindfulness can strengthen the prefrontal cortex, the part of the brain responsible for executive function and emotional control. By creating a 'gap' between a stimulus and our response, we gain the power to choose our actions rather than simply reacting out of habit or stress."
+            },
+            "SPEAKING": {
+                "title": "Speaking: Emotional Leadership",
+                "questions": [
+                    {
+                        "text": "Can you describe a time you had to manage a difficult emotion at work?",
+                        "ideal_answer": "During a project delay, I practiced deep breathing and communicated the issue calmly to my team.",
+                        "feedback": "Focus on the 'management' aspect of the emotion."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: EQ Article",
+                "prompt": "Write a 150-word article about the importance of empathy in teamwork.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: EQ",
+                "questions": [
+                    {
+                        "question": "Which of these is a pillar of EQ?",
+                        "options": [
+                            "Mental Speed",
+                            "Self-Awareness",
+                            "Numerical Logic"
+                        ],
+                        "answer": "Self-Awareness",
+                        "feedback": "Self-awareness is one of the four essential pillars."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "Social Justice & Global Citizenship",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: The Global Village",
+                "description": "The responsibilities of a global citizen.",
+                "transcript": "Living in a 'global village' means that our actions have far-reaching consequences. Global citizenship is about acknowledging our interconnectivity. It involves advocating for social justice, human rights, and equality on a global scale. This requires looking beyond our national borders and understanding systemic inequities. Whether it's supporting fair trade or advocating for refugee rights, being a global citizen means taking responsibility for the collective well-being of humanity and the planet.",
+                "context": "Sociology & Ethics"
+            },
+            "READING": {
+                "title": "Reading: Intersectionality and Equity",
+                "description": "Complexities of social justice in the modern world.",
+                "content": "Social justice is no longer a localized movement; it is a global imperative. The concept of intersectionality, coined by Kimberlé Crenshaw, is crucial for understanding how different forms of discrimination overlap and interact. For example, gender, race, class, and ability are not isolated categories but interconnected systems of power. Achieving true equity requires dismantle these systemic barriers. Global citizenship involves a commitment to these principles, recognizing that injustice anywhere is a threat to justice everywhere. Organizations are increasingly being held accountable for their diversity and inclusion efforts, moving toward a model where equity is integrated into their core values rather than being an afterthought."
+            },
+            "SPEAKING": {
+                "title": "Speaking: Global Responsibility",
+                "questions": [
+                    {
+                        "text": "What does being a 'global citizen' mean to you personally?",
+                        "ideal_answer": "To me, it means being aware of how my consumption affects people in other parts of the world.",
+                        "feedback": "Try to use the term 'interconnectivity'."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: Equity Essay",
+                "prompt": "Write a 150-word essay on why diversity is important for innovation.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Social Justice",
+                "questions": [
+                    {
+                        "question": "Who coined the term 'Intersectionality'?",
+                        "options": [
+                            "Nelson Mandela",
+                            "Kimberlé Crenshaw",
+                            "Greta Thunberg"
+                        ],
+                        "answer": "Kimberlé Crenshaw",
+                        "feedback": "Kimberlé Crenshaw is a key scholar in this field."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "Cinema, Pop Culture & Social Media Impact",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: The Streaming Era",
+                "description": "How digital platforms changed entertainment.",
+                "transcript": "The way we consume culture has been fundamentally altered by streaming platforms and social media. We've moved from a 'water cooler' culture, where everyone watched the same shows, to a fragmented landscape of niche communities. Viral trends and memes can now elevate a movie or song to global fame overnight. However, this has also led to shorter attention spans and a 'scrolling' culture where content is consumed and discarded at an alarming rate. Cinema is evolving too, with directors exploring new ways to engage an audience that is constantly distracted by their mobile devices.",
+                "context": "Cultural Studies"
+            },
+            "READING": {
+                "title": "Reading: The Influence of Celebrity Activism",
+                "description": "Pop culture icons and social change.",
+                "content": "Pop culture is not just entertainment; it is a powerful tool for social influence. We are seeing a rise in 'celebrity activism', where stars use their massive social media followings to advocate for political and social causes. While some criticize this as performative, others argue that it brings vital attention to issues that might otherwise be ignored by the mainstream media. The 'influencer' economy has also redefined marketing, moving away from traditional celebrities toward relatable individuals who build trust with their audiences. This shift highlights a broader cultural trend: the desire for authenticity and direct connection. As social media continues to evolve, the distinction between private life and public performance becomes increasingly thin, shaping the identities of a new generation."
+            },
+            "SPEAKING": {
+                "title": "Speaking: Media Influence",
+                "questions": [
+                    {
+                        "text": "How do you think social media affects your own cultural tastes?",
+                        "ideal_answer": "It definitely exposes me to more niche content through algorithms, but it also makes me follow trends too much.",
+                        "feedback": "Use the word 'fragmented' or 'niche'."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: Influencer Article",
+                "prompt": "Write a 150-word opinion piece on whether influencers are good role models.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Pop Culture",
+                "questions": [
+                    {
+                        "question": "What has replaced the 'water cooler' culture?",
+                        "options": [
+                            "Global network TV",
+                            "Niche fragmented communities",
+                            "Radio broadcasts"
+                        ],
+                        "answer": "Niche fragmented communities",
+                        "feedback": "Streaming has created many small, specialized audiences."
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "theme": "Work-Life Balance & Advanced Daily Routines",
+        "content": {
+            "LISTENING": {
+                "title": "Listening: The Burnout Epidemic",
+                "description": "Addressing the pressure of modern work.",
+                "transcript": "In our always-on culture, the boundary between professional and personal life has almost disappeared. This has led to a psychological phenomenon known as burnout, characterized by emotional exhaustion and reduced performance. Achieving work-life balance is no longer just about time management; it's about energy management. Setting firm boundaries—such as 'digital sunsets' and structured morning routines—is essential for long-term productivity. Success shouldn't be measured by how many hours we work, but by our ability to maintain high performance while staying healthy and mentally sharp.",
+                "context": "Wellness & Productivity"
+            },
+            "READING": {
+                "title": "Reading: Designing an Advanced Daily Routine",
+                "description": "Optimizing your day for B2-level performance.",
+                "content": "An effective daily routine is the foundation of high achievement. For a B2-level professional, this involves more than just a to-do list; it requires an understanding of one's own 'chronotype'—the natural peak and trough of energy throughout the day. Deep work, a term popularized by Cal Newport, should be scheduled during periods of highest cognitive focus, usually in the morning. Afternoon hours should be reserved for collaborative tasks and administrative work. Furthermore, incorporating 'micro-breaks' and physical movement is vital for sustained concentration. A truly advanced routine also includes time for continuous learning and deliberate practice. By treating our routines as experiments and adjusting them based on our results, we can create a sustainable path to both professional excellence and personal fulfillment."
+            },
+            "SPEAKING": {
+                "title": "Speaking: Your Ideal Routine",
+                "questions": [
+                    {
+                        "text": "What changes would you make to your routine to achieve a better balance?",
+                        "ideal_answer": "I would implement a digital sunset to stop checking emails after 8 PM.",
+                        "feedback": "Try to use terms like 'boundaries' or 'sustainability'."
+                    }
+                ]
+            },
+            "WRITING": {
+                "title": "Writing: Routine Proposal",
+                "prompt": "Write a 150-word guide for a perfect morning routine to boost productivity.",
+                "min_words": 120
+            },
+            "QUIZ": {
+                "title": "Final Quiz: Balance",
+                "questions": [
+                    {
+                        "question": "What does a 'digital sunset' involve?",
+                        "options": [
+                            "Watching the sun go down",
+                            "Setting boundaries for device use at night",
+                            "Buying a new computer"
+                        ],
+                        "answer": "Setting boundaries for device use at night",
+                        "feedback": "It’s about disconnecting to recover mentally."
+                    }
+                ]
+            }
+        }
+    }
+]

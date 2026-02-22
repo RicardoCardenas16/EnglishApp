@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard de Avance y Resultados</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col">
+<!-- Top Status Bar (Placeholder for iOS) -->
+<div class="h-12 w-full bg-background-light dark:bg-background-dark flex items-center justify-between px-6 sticky top-0 z-50">
+<span class="text-sm font-semibold">9:41</span>
+<div class="flex gap-1 items-center">
+<span class="material-symbols-outlined text-sm">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-sm">wifi</span>
+<span class="material-symbols-outlined text-sm">battery_full</span>
+</div>
+</div>
+<!-- Header / Profile Section -->
+<header class="px-6 pt-4 pb-6">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full border-2 border-primary p-0.5">
+<div class="size-full rounded-full bg-cover bg-center" data-alt="User profile photo showing a smiling young man" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQ-L08k6zMdzbMuxGCNfIUJfS7GI5Tsh1x7T7i-58Fa4CaljZ_KNH-3hmAy_DNtbCURW38LUOhKHAj4Goa2cwoOgboDQ7kgJEfhPf_P15uGYNxut-qMyOxerHbmz-_x_CDByS6e-gUytki0AeerDqxvEB3vF9C61AlkSPoCxHrG0c1jvCLa62z1Ud4bSGHaKeSqsf1DHVySTk4NjwF_J1eSWnyiOXydXgIiUNAYY-XNnvdTvGu1Kut-YjaCKN9mjNKhNcNro03IN0')">
+</div>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight">Hola, Alejandro</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">¡Sigue así! Estás cerca del nivel B1.</p>
+</div>
+</div>
+<button class="size-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</div>
+<!-- Main Progress Card -->
+<div class="bg-primary rounded-xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-primary/20 text-xs font-bold uppercase tracking-widest mb-1 text-white/80">Nivel Actual</p>
+<h2 class="text-3xl font-extrabold text-white mb-4 tracking-tight">A2 <span class="text-lg font-medium opacity-80">Pre-Intermediate</span></h2>
+<div class="flex items-center gap-2 mb-2">
+<div class="flex-1 h-2 bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-white w-[65%] rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-white">65%</span>
+</div>
+<p class="text-xs text-white/70">Faltan 12 lecciones para alcanzar <b>B1 Intermediate</b></p>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute -right-4 -bottom-4 size-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="absolute right-8 top-4 size-16 bg-white/5 rounded-full border border-white/10"></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-6 space-y-8 pb-32">
+<!-- The 4 Pillars Section -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Tus 4 Pilares</h3>
+<span class="text-primary text-xs font-semibold">Detalles</span>
+</div>
+<div class="space-y-5">
+<!-- Reading -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">auto_stories</span>
+<span class="text-sm font-medium">Reading (Lectura)</span>
+</div>
+<span class="text-xs font-bold">75%</span>
+</div>
+<div class="h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[75%]"></div>
+</div>
+</div>
+<!-- Listening -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-400 text-lg">headset</span>
+<span class="text-sm font-medium">Listening (Escucha)</span>
+</div>
+<span class="text-xs font-bold text-orange-400">40%</span>
+</div>
+<div class="h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-orange-400 rounded-full w-[40%]"></div>
+</div>
+</div>
+<!-- Speaking -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-400 text-lg">record_voice_over</span>
+<span class="text-sm font-medium">Speaking (Habla)</span>
+</div>
+<span class="text-xs font-bold">60%</span>
+</div>
+<div class="h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-400 rounded-full w-[60%]"></div>
+</div>
+</div>
+<!-- Writing -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-purple-400 text-lg">edit_note</span>
+<span class="text-sm font-medium">Writing (Escritura)</span>
+</div>
+<span class="text-xs font-bold">55%</span>
+</div>
+<div class="h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-purple-400 rounded-full w-[55%]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Reinforcement Section -->
+<section class="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-5 border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-orange-400">trending_up</span>
+<h3 class="text-lg font-bold">Para Reforzar</h3>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Hemos detectado que necesitas practicar estos temas para mejorar tu nivel de Listening:</p>
+<div class="space-y-3 mb-6">
+<div class="flex items-center gap-3 bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+<div class="size-8 rounded bg-orange-400/10 flex items-center justify-center text-orange-400 font-bold text-xs">A2</div>
+<div class="flex-1">
+<h4 class="text-sm font-semibold">Present Perfect</h4>
+<p class="text-xs text-slate-400 tracking-tight">Estructura y participios</p>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+<div class="flex items-center gap-3 bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+<div class="size-8 rounded bg-orange-400/10 flex items-center justify-center text-orange-400 font-bold text-xs">A2</div>
+<div class="flex-1">
+<h4 class="text-sm font-semibold">Travel Vocabulary</h4>
+<p class="text-xs text-slate-400 tracking-tight">Aeropuertos y hoteles</p>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_circle</span>
+                Repasar ahora
+            </button>
+</section>
+<!-- Stats Grid -->
+<section class="grid grid-cols-2 gap-4">
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-orange-500 mb-2" style="font-variation-settings: 'FILL' 1">local_fire_department</span>
+<span class="text-2xl font-bold leading-none">14</span>
+<span class="text-[10px] uppercase font-bold text-slate-400 mt-1">Días de racha</span>
+</div>
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary mb-2">schedule</span>
+<span class="text-2xl font-bold leading-none">32h</span>
+<span class="text-[10px] uppercase font-bold text-slate-400 mt-1">Tiempo total</span>
+</div>
+</section>
+</main>
+<!-- Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-background-dark/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 pb-8 pt-3 z-50">
+<div class="flex justify-between items-center max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Lecciones</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">leaderboard</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Progreso</span>
+</a>
+<div class="relative -top-6">
+<button class="size-14 bg-primary text-white rounded-full shadow-xl shadow-primary/30 flex items-center justify-center ring-4 ring-white dark:ring-background-dark">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Comunidad</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Perfil</span>
+</a>
+</div>
+</nav>
+</body></html>
