@@ -1,19 +1,9 @@
 {
-    "version": 2,
-    "public": false,
-    "builds": [
-        {
-            "src": "frontend/package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "dist"
-            }
-        }
-    ],
+    "public": true,
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "frontend/index.html"
+            "destination": "/frontend/index.html"
         }
     ]
 }
