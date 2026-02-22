@@ -12,7 +12,7 @@ django.setup()
 from api.models import Lesson, Topic
 
 # Configure Gemini
-API_KEY = "AIzaSyBHT7AcrvyAIoR8dLbbNqm4TO6hAXSB54w"
+API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=API_KEY)
 
 THEMES = [
