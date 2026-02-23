@@ -58,7 +58,9 @@ const PlacementTest = () => {
             setStep('result');
         } catch (error) {
             console.error(error);
-            alert(error.message || "Error evaluating your results. Please try again.");
+            const isTimeout = error.message.includes('fetch') || error.message.includes('Load');
+            const msg = isTimeout ? "La IA está tardando más de lo normal debido al tráfico. Por favor, intenta de nuevo en unos segundos." : (error.message || "Error al evaluar resultados.");
+            alert(msg);
             setStep('intro');
         }
     };
