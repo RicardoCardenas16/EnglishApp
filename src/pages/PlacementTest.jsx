@@ -67,8 +67,12 @@ const PlacementTest = () => {
         return (
             <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-6 font-display">
                 <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-8 border border-slate-100 dark:border-slate-800 animate-fade-in-up">
-                    <div className="size-20 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <span className="material-symbols-outlined text-4xl text-primary">assessment</span>
+                    <div className="mb-6 flex justify-center">
+                        <img
+                            src="/logo.jpg"
+                            alt="Chori Logo"
+                            className="w-20 h-20 rounded-2xl shadow-lg object-cover border-4 border-white dark:border-gray-800"
+                        />
                     </div>
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent text-center mb-4">
                         English Level Assessment
@@ -93,7 +97,7 @@ const PlacementTest = () => {
                         Start Evaluation
                         <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </button>
-                    <p className="text-[10px] text-slate-400 text-center mt-4 uppercase tracking-widest">Powered by Antigravity AI</p>
+                    <p className="text-[10px] text-slate-400 text-center mt-4 uppercase tracking-widest">EnglishApp by Chori</p>
                 </div>
             </div>
         );
