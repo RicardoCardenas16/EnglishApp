@@ -16,53 +16,65 @@ class RegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
-        # Manual creation to handle password hashing and profile creation
-        username = request.data.get('username')
-        password = request.data.get('password')
-        first_name = request.data.get('first_name', '')
-        email = request.data.get('email', '')
+        try:
+            # Manual creation to handle password hashing and profile creation
+            username = request.data.get('username')
+            password = request.data.get('password')
+            first_name = request.data.get('first_name', '')
+            email = request.data.get('email', '')
 
-        if not username or not password:
-            return Response({'error': 'Username and password required'}, status=status.HTTP_400_BAD_REQUEST)
+            print(f"--- Registration Attempt: {username} ---")
 
-        if User.objects.filter(username=username).exists():
-            return Response({'error': 'User already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            if not username or not password:
+                return Response({'error': 'Username and password required'}, status=status.HTTP_400_BAD_REQUEST)
 
-        user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name)
-        
-        # Create user profile
-        Profile.objects.create(user=user)
-        
-        # Generate token
-        token, created = Token.objects.get_or_create(user=user)
+            if User.objects.filter(username=username).exists():
+                return Response({'error': 'User already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'email': user.email,
-            'username': user.username
-        }, status=status.HTTP_201_CREATED)
+            # Create the user
+            user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name)
+            
+            # Create user profile
+            Profile.objects.create(user=user)
+            
+            # Generate token
+            token, created = Token.objects.get_or_create(user=user)
+
+            print(f"--- Registration SUCCESS: {username} ---")
+            return Response({
+                'token': token.key,
+                'user_id': user.pk,
+                'email': user.email,
+                'username': user.username
+            }, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            error_msg = str(e)
+            print(f"--- Registration ERROR: {error_msg} ---")
+            return Response({'error': f"Server error during registration: {error_msg}"}, status=status.HTTP_400_BAD_REQUEST)
 
 class CustomAuthToken(ObtainAuthToken):
     """
     Custom Login API that returns Token + User ID + Email
     """
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        
-        # Ensure profile exists (backward compatibility)
-        Profile.objects.get_or_create(user=user)
+        try:
+            serializer = self.serializer_class(data=request.data,
+                                               context={'request': request})
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data['user']
+            token, created = Token.objects.get_or_create(user=user)
+            
+            # Ensure profile exists (backward compatibility)
+            Profile.objects.get_or_create(user=user)
 
-        return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'email': user.email,
-            'username': user.username
-        })
+            return Response({
+                'token': token.key,
+                'user_id': user.pk,
+                'email': user.email,
+                'username': user.username
+            })
+        except Exception as e:
+            return Response({'error': f"Login failed: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
 
 class DashboardViewSet(viewsets.ViewSet):
     """
@@ -386,8 +398,6 @@ class PlacementTestViewSet(viewsets.ViewSet):
             elif "```" in text:
                 text = text.split("```")[1].split("```")[0]
             
-            import json
-            import re
             
             # Try parsing directly
             try:
