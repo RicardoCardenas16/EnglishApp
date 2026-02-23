@@ -1,6 +1,7 @@
 import os
 import django
 import json
+from gtts import gTTS
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
@@ -16,7 +17,7 @@ def seed_b2():
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    # Path for static assets
+    # Path for static assets (using backend root to match settings.py)
     static_assets_dir = os.path.join(os.getcwd(), "static", "assets")
     os.makedirs(static_assets_dir, exist_ok=True)
 
@@ -27,7 +28,23 @@ def seed_b2():
         content = entry['content']
         
         if Topic.objects.filter(title=theme, level="B2").exists():
-            print(f"Skipping {theme}, already exists.")
+            # Check if listening audio exists, if not, generate it
+            topic = Topic.objects.get(title=theme, level="B2")
+            listening_lesson = Lesson.objects.filter(topic=topic, type="LISTENING").first()
+            if listening_lesson:
+                audio_filename = f"topic_{topic.id}_listening.mp3"
+                audio_path = os.path.join(static_assets_dir, audio_filename)
+                if not os.path.exists(audio_path):
+                    transcript = listening_lesson.content_json.get("transcript", "")
+                    if transcript:
+                        print(f"Generating missing audio for existing theme: {theme}...")
+                        try:
+                            tts = gTTS(text=transcript, lang='en')
+                            tts.save(audio_path)
+                            listening_lesson.content_json["audio_url"] = f"/static/assets/{audio_filename}"
+                            listening_lesson.save()
+                        except Exception as e:
+                            print(f"Error generating audio: {e}")
             continue
             
         print(f"Seeding B2 theme from JSON: {theme}...")
@@ -40,14 +57,22 @@ def seed_b2():
         
         lesson_order = 1
         for l_type, l_data in content.items():
-            # Handle key mapping if necessary (e.g. LISTENING, READING, etc.)
-            
-            # Use a dummy audio for now if not generated, 
-            # or we could run gTTS here too.
             if l_type == "LISTENING":
-                # For pre-seeded items, we might not have specific audio, 
-                # but we can use the default or generate once.
-                l_data["audio_url"] = "/static/assets/daily_routine.mp3"
+                audio_filename = f"topic_{topic.id}_listening.mp3"
+                audio_path = os.path.join(static_assets_dir, audio_filename)
+                
+                transcript = l_data.get("transcript", "")
+                if transcript:
+                    print(f"Generating audio for topic: {theme}...")
+                    try:
+                        tts = gTTS(text=transcript, lang='en')
+                        tts.save(audio_path)
+                        l_data["audio_url"] = f"/static/assets/{audio_filename}"
+                    except Exception as e:
+                        print(f"Error generating audio: {e}")
+                        l_data["audio_url"] = "/static/assets/daily_routine.mp3"
+                else:
+                    l_data["audio_url"] = "/static/assets/daily_routine.mp3"
 
             Lesson.objects.create(
                 topic=topic,

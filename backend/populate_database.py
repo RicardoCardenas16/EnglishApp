@@ -34,6 +34,13 @@ def run():
             except Exception as e:
                 print(f"Error populating {level}: {e}")
 
+    # Final pass to ensure all audios exist and URLs are correct
+    try:
+        from generate_missing_audios import run as generate_audios
+        generate_audios()
+    except Exception as e:
+        print(f"Error in final audio generation pass: {e}")
+
     print("Database population complete.")
 
 if __name__ == "__main__":
