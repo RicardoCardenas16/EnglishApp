@@ -1,11 +1,14 @@
+import json
+import re
+import google.generativeai as genai
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-from .models import Profile, Lesson, UserLessonProgress
-from .serializers import ProfileSerializer, LessonSerializer, UserLessonProgressSerializer, UserSerializer
+from .models import Profile, Topic, Lesson, UserLessonProgress
+from .serializers import ProfileSerializer, TopicSerializer, LessonSerializer, UserLessonProgressSerializer, UserSerializer
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -158,7 +161,6 @@ class UserProgressViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(progress)
         return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
 
-import google.generativeai as genai
 from django.conf import settings
 
 class WritingEvaluationViewSet(viewsets.ViewSet):
@@ -431,9 +433,6 @@ class PlacementTestViewSet(viewsets.ViewSet):
             json_match = re.search(r'\{.*\}', text, re.DOTALL)
             if json_match:
                 text = json_match.group(0)
-            
-            import json
-            import re
             
             data = None
             try:
