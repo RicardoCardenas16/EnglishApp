@@ -3,7 +3,7 @@
     "name": "English Journey: B2 Mastery",
     "icons": [
         {
-            "src": "logo.jpg",
+            "src": "logo.jpg?v=2",
             "type": "image/jpeg",
             "sizes": "512x512"
         }
