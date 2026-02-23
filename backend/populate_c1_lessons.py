@@ -61,7 +61,7 @@ def populate_c1_lessons():
     print("Populating C1 lessons...")
     
     # Ensure assets directory exists for audio
-    assets_dir = os.path.join(os.getcwd(), "staticfiles", "assets")
+    assets_dir = os.path.join(os.getcwd(), "static", "assets")
     os.makedirs(assets_dir, exist_ok=True)
     
     current_topic_order = Topic.objects.filter(level="C1").count() + 1

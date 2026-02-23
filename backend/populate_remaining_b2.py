@@ -63,11 +63,12 @@ def populate_remaining():
     remaining = [t for t in THEMES if t not in existing_topics]
     print(f"Remaining to generate: {remaining}")
 
-    assets_dir = "../frontend/public/assets"
-    os.makedirs(assets_dir, exist_ok=True)
+    # Path for static assets
+    static_assets_dir = os.path.join(os.getcwd(), "static", "assets")
+    os.makedirs(static_assets_dir, exist_ok=True)
     
-    # Get current max order
-    last_topic = Topic.objects.all().order_by('-order').first()
+    # Get current max order for B2
+    last_topic = Topic.objects.filter(level="B2").order_by('-order').first()
     current_topic_order = (last_topic.order + 1) if last_topic else 1
     
     for theme in remaining:
@@ -90,16 +91,16 @@ def populate_remaining():
                 # Generate real audio for listening
                 if l_type == "LISTENING":
                     audio_filename = f"topic_{topic.id}_listening.mp3"
-                    audio_path = os.path.join(assets_dir, audio_filename)
+                    audio_path = os.path.join(static_assets_dir, audio_filename)
                     
                     transcript = data.get("transcript", "")
                     if transcript:
                         print(f"Generating audio for topic: {theme}...")
                         tts = gTTS(text=transcript, lang='en')
                         tts.save(audio_path)
-                        data["audio_url"] = f"/assets/{audio_filename}"
+                        data["audio_url"] = f"/static/assets/{audio_filename}"
                     else:
-                        data["audio_url"] = "/assets/daily_routine.mp3"
+                        data["audio_url"] = "/static/assets/daily_routine.mp3"
                 
                 Lesson.objects.create(
                     topic=topic,

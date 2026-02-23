@@ -13,18 +13,24 @@ def run():
     levels = ["A1", "A2", "B1", "B2", "C1"]
     
     for level in levels:
-        if Topic.objects.filter(level=level).count() == 0:
-            print(f"Populating {level} content...")
+        count = Topic.objects.filter(level=level).count()
+        print(f"Level {level} has {count} topics.")
+        
+        if count < 5:
+            print(f"Attempting to add more content for {level}...")
             try:
                 if level == "B2":
-                    from populate_b2_lessons import populate_lessons
-                    populate_lessons()
+                    try:
+                        from seed_from_json import seed_b2
+                        seed_b2()
+                    except ImportError:
+                        from populate_remaining_b2 import populate_remaining
+                        populate_remaining()
                 elif level == "C1":
                     from populate_c1_lessons import populate_c1_lessons
                     populate_c1_lessons()
                 else:
-                    # Generic population logic for A1/A2/B1
-                    print(f"Note: No specific script for {level}, skipping or using placeholder logic.")
+                    print(f"No specific population logic for {level} yet.")
             except Exception as e:
                 print(f"Error populating {level}: {e}")
 
