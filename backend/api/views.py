@@ -477,7 +477,30 @@ class PlacementTestViewSet(viewsets.ViewSet):
             })
         except Exception as e:
             error_str = str(e)
-            if "quota" in error_str.lower() or "429" in error_str:
-                return Response({'error': 'Evaluation failed due to rate limit. Please try again in 10 seconds.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
-            return Response({'error': f"Evaluation failed: {error_str}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            print(f"AI Evaluation Failed, using logic fallback: {error_str}")
+            
+            # LOGIC FALLBACK: Calculate level based on correct answers
+            correct_count = 0
+            for res in results:
+                if res.get('user_answer') == res.get('correct_answer'):
+                    correct_count += 1
+            
+            # Simple threshold mapping
+            if correct_count >= 13: assigned_level = "C1"
+            elif correct_count >= 10: assigned_level = "B2"
+            elif correct_count >= 7: assigned_level = "B1"
+            elif correct_count >= 4: assigned_level = "A2"
+            else: assigned_level = "A1"
+            
+            # Update profile
+            profile = Profile.objects.get(user=request.user)
+            profile.level = assigned_level
+            profile.has_completed_placement_test = True
+            profile.save()
+            
+            return Response({
+                'level': assigned_level,
+                'summary': f"Based on your score of {correct_count}/15, you have been placed in {assigned_level}.",
+                'message': f"Evaluation complete! Your level is {assigned_level}."
+            })
 
