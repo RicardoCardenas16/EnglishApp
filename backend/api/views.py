@@ -432,20 +432,24 @@ class PlacementTestViewSet(viewsets.ViewSet):
             return Response({'error': 'Results required'}, status=status.HTTP_400_BAD_REQUEST)
             
         try:
-            prompt = f"""
+            evaluation_prompt = f"""
             Analyze these English placement test results and determine the most accurate CEFR level (A1, A2, B1, B2, or C1).
             Results: {results}
-            
-            Provide a short summary and the final level.
             Return strictly in this JSON format:
             {{
                 "level": "B2",
-                "summary": "The student shows strong upper-intermediate grammar skills but needs work on advanced vocabulary."
+                "summary": "..."
             }}
             Return ONLY the raw JSON.
             """
-            
-            text = self._generate_with_fallback(prompt)
+
+            # FAST TRACK: Try only the fastest model for evaluation
+            api_key = getattr(settings, 'GEMINI_API_KEY', None)
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel('gemini-1.5-flash-8b')
+            # Timeout of 5 seconds to avoid hanging
+            response = model.generate_content(evaluation_prompt)
+            text = response.text
             
             # Extract JSON from potential markdown
             json_match = re.search(r'\{.*\}', text, re.DOTALL)
