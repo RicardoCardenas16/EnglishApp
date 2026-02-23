@@ -341,7 +341,7 @@ class PlacementTestViewSet(viewsets.ViewSet):
             raise Exception("AI configuration missing")
             
         genai.configure(api_key=api_key)
-        models_to_try = ['gemini-flash-latest', 'gemini-2.0-flash-lite-preview-02-05', 'gemini-1.5-flash', 'gemini-pro-latest']
+        models_to_try = ['gemini-1.5-flash', 'gemini-flash-latest', 'gemini-2.0-flash-lite-preview-02-05', 'gemini-pro-latest']
         
         last_error = None
         for model_name in models_to_try:
@@ -427,11 +427,11 @@ class PlacementTestViewSet(viewsets.ViewSet):
             
             text = self._generate_with_fallback(prompt)
             
-            if "```json" in text:
-                text = text.split("```json")[1].split("```")[0]
-            elif "```" in text:
-                text = text.split("```")[1].split("```")[0]
-                
+            # Extract JSON from potential markdown
+            json_match = re.search(r'\{.*\}', text, re.DOTALL)
+            if json_match:
+                text = json_match.group(0)
+            
             import json
             import re
             
