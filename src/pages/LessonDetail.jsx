@@ -804,24 +804,31 @@ const LessonDetail = () => {
                                     )}
                                 </div>
                             ) : vocabDefinitions ? (
-                                <div className="space-y-4">
-                                    <button onClick={() => setVocabDefinitions(null)} className="text-sm text-slate-500 hover:text-indigo-600 flex items-center gap-1 mb-4">
-                                        <span className="material-symbols-outlined text-sm">arrow_back</span> Back to List
+                                <div className="space-y-4 animate-fade-in">
+                                    <button onClick={() => setVocabDefinitions(null)} className="text-sm text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1 mb-4 hover:underline">
+                                        <span className="material-symbols-outlined text-sm">arrow_back</span> Back to Selection
                                     </button>
 
-                                    <div className="space-y-4">
-                                        {vocabDefinitions.map((item, idx) => (
-                                            <div key={idx} className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
-                                                <h5 className="font-bold text-lg text-indigo-700 dark:text-indigo-400 capitalize mb-1">{item.word}</h5>
-                                                <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-                                                    <span className="font-bold opacity-70">Def:</span> {item.definition}
-                                                </p>
-                                                <div className="text-sm bg-white dark:bg-black/20 p-2 rounded-lg italic text-slate-600 dark:text-slate-400 border border-slate-100 dark:border-slate-800">
-                                                    "{item.example}"
+                                    {vocabDefinitions.length > 0 ? (
+                                        <div className="space-y-4">
+                                            {vocabDefinitions.map((item, idx) => (
+                                                <div key={idx} className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                                                    <h5 className="font-bold text-lg text-indigo-700 dark:text-indigo-400 capitalize mb-1">{item.word}</h5>
+                                                    <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
+                                                        <span className="font-bold opacity-70">Def:</span> {item.definition}
+                                                    </p>
+                                                    <div className="text-sm bg-white dark:bg-black/20 p-2 rounded-lg italic text-slate-600 dark:text-slate-400 border border-slate-100 dark:border-slate-800">
+                                                        "{item.example}"
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
-                                    </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="text-center py-10">
+                                            <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">sentiment_dissatisfied</span>
+                                            <p className="text-slate-500">The AI examiner didn't return any definitions. Please try selecting the words again.</p>
+                                        </div>
+                                    )}
                                 </div>
                             ) : vocabQuiz ? (
                                 <div className="space-y-6">
@@ -834,41 +841,50 @@ const LessonDetail = () => {
                                         )}
                                     </div>
 
-                                    {vocabQuiz.map((q, idx) => (
-                                        <div key={idx} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm">
-                                            <p className="font-bold mb-4 flex gap-2">
-                                                <span className="size-6 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xs shrink-0">{idx + 1}</span>
-                                                {q.question}
-                                            </p>
-                                            <div className="grid grid-cols-1 gap-2">
-                                                {q.options.map((opt, oIdx) => {
-                                                    const isSelected = vocabQuizAnswers[idx] === opt;
-                                                    const isCorrect = q.correct_answer === opt;
-                                                    let btnClass = "text-left p-3 rounded-lg border transition-all ";
+                                    {vocabQuiz.length > 0 ? (
+                                        <>
+                                            {vocabQuiz.map((q, idx) => (
+                                                <div key={idx} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm">
+                                                    <p className="font-bold mb-4 flex gap-2">
+                                                        <span className="size-6 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xs shrink-0">{idx + 1}</span>
+                                                        {q.question}
+                                                    </p>
+                                                    <div className="grid grid-cols-1 gap-2">
+                                                        {q.options.map((opt, oIdx) => {
+                                                            const isSelected = vocabQuizAnswers[idx] === opt;
+                                                            const isCorrect = q.correct_answer === opt;
+                                                            let btnClass = "text-left p-3 rounded-lg border transition-all ";
 
-                                                    if (vocabQuizSubmitted) {
-                                                        if (isCorrect) btnClass += "bg-green-100 border-green-500 text-green-800";
-                                                        else if (isSelected) btnClass += "bg-red-100 border-red-500 text-red-800";
-                                                        else btnClass += "bg-slate-50 border-slate-200 opacity-50";
-                                                    } else {
-                                                        if (isSelected) btnClass += "bg-purple-50 border-purple-500 text-purple-900";
-                                                        else btnClass += "bg-slate-50 border-slate-200 hover:bg-slate-100";
-                                                    }
+                                                            if (vocabQuizSubmitted) {
+                                                                if (isCorrect) btnClass += "bg-green-100 border-green-500 text-green-800";
+                                                                else if (isSelected) btnClass += "bg-red-100 border-red-500 text-red-800";
+                                                                else btnClass += "bg-slate-50 border-slate-200 opacity-50";
+                                                            } else {
+                                                                if (isSelected) btnClass += "bg-purple-50 border-purple-500 text-purple-900";
+                                                                else btnClass += "bg-slate-50 border-slate-200 hover:bg-slate-100";
+                                                            }
 
-                                                    return (
-                                                        <button
-                                                            key={oIdx}
-                                                            onClick={() => !vocabQuizSubmitted && setVocabQuizAnswers(prev => ({ ...prev, [idx]: opt }))}
-                                                            className={btnClass}
-                                                            disabled={vocabQuizSubmitted}
-                                                        >
-                                                            {opt}
-                                                        </button>
-                                                    );
-                                                })}
-                                            </div>
+                                                            return (
+                                                                <button
+                                                                    key={oIdx}
+                                                                    onClick={() => !vocabQuizSubmitted && setVocabQuizAnswers(prev => ({ ...prev, [idx]: opt }))}
+                                                                    className={btnClass}
+                                                                    disabled={vocabQuizSubmitted}
+                                                                >
+                                                                    {opt}
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </>
+                                    ) : (
+                                        <div className="text-center py-10">
+                                            <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">quiz</span>
+                                            <p className="text-slate-500">Could not generate a quiz for these words. Try different words.</p>
                                         </div>
-                                    ))}
+                                    )}
 
                                     {!vocabQuizSubmitted ? (
                                         <button

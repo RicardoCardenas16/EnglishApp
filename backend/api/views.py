@@ -249,35 +249,41 @@ class WritingEvaluationViewSet(viewsets.ViewSet):
                 ]
                 """
             else:
-                # Default WRITING prompt
+                # Default WRITING prompt - In English for consistency
                 evaluation_prompt = f"""
-                Actúa como un profesor de inglés nativo experto en preparación para exámenes Cambridge (nivel B2 o C1). Tu objetivo es corregir y dar retroalimentación sobre los textos que el usuario escriba, basado en la tarea: "{prompt_context}".
+                Act as a native English teacher expert in Cambridge exam preparation (B2 or C1 level). Your goal is to correct and provide feedback on the text provided based on the task: "{prompt_context}".
 
-                Texto del usuario:
+                User Text:
                 "{text}"
 
-                Por cada entrada del usuario, debes estructurar tu respuesta de la siguiente manera:
+                Structure your response as follows:
 
                 **Corrected Version**
-                Presenta el texto corregido con un lenguaje natural y fluido.
+                Present the corrected text with natural and fluid language.
 
                 **Grammar & Vocabulary**
-                Explica de forma breve los errores cometidos (tiempos verbales, preposiciones, etc.) y sugiere 3 palabras o expresiones de nivel avanzado (C1/C2) para reemplazar palabras comunes.
+                Briefly explain the errors made (verb tenses, prepositions, etc.) and suggest 3 advanced level words or expressions (C1/C2) to replace common words.
 
                 **Tone & Style**
-                Evalúa si el tono es adecuado (formal/informal) y cómo mejorar la cohesión.
+                Evaluate if the tone is appropriate (formal/informal) and how to improve cohesion.
 
                 **Challenge**
-                Haz una pregunta abierta relacionada con el tema del texto para que el usuario continúe la práctica.
+                Ask an open-ended question related to the topic for the user to continue practicing.
 
-                Nota importante: Mantén un tono motivador pero exigente. Si el usuario comete errores típicos de hispanohablantes, menciónalo sutilmente para ayudarle a evitarlos.
+                Note: Keep a motivating but demanding tone. 
 
-                Al final de todo, en una línea separada, escribe únicamente: "FINAL_SCORE: X" (donde X es un número del 1 al 10).
+                At the very end, on a separate line, write ONLY: "FINAL_SCORE: X" (where X is a number from 1 to 10).
                 """
 
             # List of models to try in order of preference/speed
             # prioritizing 'gemini-flash-latest' as it was confirmed working in tests
-            models_to_try = ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-1.5-pro', 'gemini-pro']
+            # Updated models_to_try: Prioritize Pro for quality as requested by user with paid tier
+            models_to_try = [
+                'gemini-1.5-pro',      # Best quality, user's preference for paid tier
+                'gemini-1.5-flash',    # Extremely fast, good as fallback
+                'gemini-1.5-flash-8b', # Mini model, ultra fast
+                'gemini-pro'           # Legacy pro
+            ]
             
             response = None
             last_error = None
@@ -303,18 +309,29 @@ class WritingEvaluationViewSet(viewsets.ViewSet):
             feedback_text = response.text
             
             if submission_type in ['vocabulary', 'vocab_quiz']:
-                 # Simple cleanup for JSON
-                 cleaned_json = feedback_text
-                 if "```json" in cleaned_json:
-                     parts = cleaned_json.split("```json")
-                     if len(parts) > 1:
-                         cleaned_json = parts[1]
-                 if "```" in cleaned_json:
-                     cleaned_json = cleaned_json.split("```")[0]
-                 return Response({
-                     'feedback': cleaned_json.strip(),
-                     'score': None
-                 })
+                # ROBUST JSON EXTRACTION: Use regex to find the first Array or Object block
+                import re
+                try:
+                    # Look for anything between [ ] or { }
+                    json_match = re.search(r'\[.*\]|\{.*\}', feedback_text, re.DOTALL)
+                    if json_match:
+                        cleaned_json = json_match.group(0)
+                        # Verify it's actually valid JSON before returning
+                        json.loads(cleaned_json) 
+                        return Response({
+                            'feedback': cleaned_json,
+                            'score': None
+                        })
+                    else:
+                        raise ValueError("No JSON block found in AI response")
+                except Exception as json_e:
+                    print(f"JSON Parsing failed: {json_e}. Raw text: {feedback_text}")
+                    # If parsing fails, try one more simple strip of markdown
+                    cleaned = feedback_text.replace('```json', '').replace('```', '').strip()
+                    return Response({
+                        'feedback': cleaned,
+                        'score': None
+                    })
 
             score = 8 # Default safe score
             
@@ -355,7 +372,8 @@ class PlacementTestViewSet(viewsets.ViewSet):
             raise Exception("AI configuration missing")
             
         genai.configure(api_key=api_key)
-        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-1.5-pro', 'gemini-pro']
+        # Prioritize Pro as requested by user
+        models_to_try = ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-pro']
         
         last_error = None
         for model_name in models_to_try:
@@ -382,11 +400,11 @@ class PlacementTestViewSet(viewsets.ViewSet):
             
             text = self._generate_with_fallback(prompt)
             
-            # Cleanup common AI formatting
-            if "```json" in text:
-                text = text.split("```json")[1].split("```")[0]
-            elif "```" in text:
-                text = text.split("```")[1].split("```")[0]
+            # Robust JSON extraction using regex
+            import re
+            json_match = re.search(r'\[.*\]|\{.*\}', text, re.DOTALL)
+            if json_match:
+                text = json_match.group(0)
             
             
             # Try parsing directly
