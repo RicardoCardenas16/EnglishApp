@@ -72,7 +72,7 @@ const Login = () => {
                     </h1>
                     <p className="text-[#616f89] dark:text-gray-400 text-sm font-normal leading-relaxed text-center px-4">
                         Master Reading, Writing, Listening, and Speaking across all levels (A1 to B2).<br />
-                        <span className="text-[10px] opacity-30">V1.0.6 - Debug Ready</span>
+                        <span className="text-[10px] opacity-30">V1.0.7 - Auto-Retry Active</span>
                     </p>
                 </div>
 

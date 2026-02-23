@@ -1,7 +1,7 @@
-// Version: 1.0.5 - Detailed Error Tracking
+// Version: 1.0.7 - Smart Retry & Wake-up Check
 const API_URL = 'https://englishbackend-wygz.onrender.com/api';
 
-export const loginUser = async (username, password) => {
+export const loginUser = async (username, password, retryCount = 0) => {
     try {
         const response = await fetch(`${API_URL}/login/`, {
             method: 'POST',
@@ -40,11 +40,19 @@ export const loginUser = async (username, password) => {
         return data;
     } catch (error) {
         console.error('Error logging in:', error);
+        if (error.message === 'Failed to fetch' && retryCount < 2) {
+            console.log(`Retrying login... attempt ${retryCount + 1}`);
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            return loginUser(username, password, retryCount + 1);
+        }
+        if (error.message === 'Failed to fetch') {
+            throw new Error("Cannot reach the server. It might be starting up (Free tier). Please wait 20 seconds and try again.");
+        }
         throw error;
     }
 };
 
-export const registerUser = async (fullName, username, password) => {
+export const registerUser = async (fullName, username, password, retryCount = 0) => {
     try {
         const response = await fetch(`${API_URL}/register/`, {
             method: 'POST',
@@ -87,6 +95,14 @@ export const registerUser = async (fullName, username, password) => {
         return data;
     } catch (error) {
         console.error('Error registering:', error);
+        if (error.message === 'Failed to fetch' && retryCount < 2) {
+            console.log(`Retrying registration... attempt ${retryCount + 1}`);
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            return registerUser(fullName, username, password, retryCount + 1);
+        }
+        if (error.message === 'Failed to fetch') {
+            throw new Error("Network Error. The server might be waking up. Please wait a moment and try again.");
+        }
         throw error;
     }
 };
