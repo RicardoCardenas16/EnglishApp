@@ -403,9 +403,27 @@ class PlacementTestViewSet(viewsets.ViewSet):
                 
         except Exception as e:
             error_str = str(e)
-            if "quota" in error_str.lower() or "429" in error_str:
-                return Response({'error': 'AI service is temporarily busy. Please wait 10 seconds and try again.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
-            return Response({'error': f"Test generation failed: {error_str}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            print(f"AI Test Generation Failed, using fallback: {error_str}")
+            
+            # HARDCODED FALLBACK QUESTIONS (to prevent blocking the user)
+            fallback_questions = [
+                {"id": 1, "question": "I ___ a student.", "options": ["am", "is", "are", "be"], "answer": "am", "level": "A1"},
+                {"id": 2, "question": "Where ___ she live?", "options": ["do", "does", "is", "has"], "answer": "does", "level": "A1"},
+                {"id": 3, "question": "Yesterday I ___ to the park.", "options": ["go", "gone", "went", "going"], "answer": "went", "level": "A2"},
+                {"id": 4, "question": "She has ___ been to Paris.", "options": ["never", "ever", "yet", "already"], "answer": "never", "level": "A2"},
+                {"id": 5, "question": "If it rains, I ___ stay at home.", "options": ["will", "would", "am", "was"], "answer": "will", "level": "B1"},
+                {"id": 6, "question": "I'm looking forward to ___ you.", "options": ["see", "seeing", "saw", "seen"], "answer": "seeing", "level": "B1"},
+                {"id": 7, "question": "The book ___ was written in 1920 is a classic.", "options": ["who", "which", "whose", "whom"], "answer": "which", "level": "B1"},
+                {"id": 8, "question": "He denied ___ the money.", "options": ["to steal", "stealing", "steal", "stolen"], "answer": "stealing", "level": "B2"},
+                {"id": 9, "question": "I wish I ___ more time.", "options": ["have", "had", "would have", "having"], "answer": "had", "level": "B2"},
+                {"id": 10, "question": "By the time we arrived, they ___.", "options": ["left", "have left", "had left", "was leaving"], "answer": "had left", "level": "B2"},
+                {"id": 11, "question": "Hardly ___ I started when it began to rain.", "options": ["did", "had", "was", "have"], "answer": "had", "level": "C1"},
+                {"id": 12, "question": "I'd rather you ___ tell anyone.", "options": ["not", "didn't", "don't", "won't"], "answer": "didn't", "level": "C1"},
+                {"id": 13, "question": "___ you need any help, let me know.", "options": ["Should", "If", "Would", "May"], "answer": "Should", "level": "C1"},
+                {"id": 14, "question": "She is so lazy. ___ does she do any work.", "options": ["Often", "Rarely", "Never", "Ever"], "answer": "Rarely", "level": "B2"},
+                {"id": 15, "question": "The ___ you work, the better you get.", "options": ["harder", "more hard", "hardest", "hard"], "answer": "harder", "level": "A2"}
+            ]
+            return Response(fallback_questions)
 
     @action(detail=False, methods=['post'])
     def evaluate(self, request):
