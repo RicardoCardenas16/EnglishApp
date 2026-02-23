@@ -277,7 +277,7 @@ class WritingEvaluationViewSet(viewsets.ViewSet):
 
             # List of models to try in order of preference/speed
             # prioritizing 'gemini-flash-latest' as it was confirmed working in tests
-            models_to_try = ['gemini-flash-latest', 'gemini-2.0-flash-lite', 'gemini-1.5-flash', 'gemini-pro-latest']
+            models_to_try = ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-1.5-pro', 'gemini-pro']
             
             response = None
             last_error = None
