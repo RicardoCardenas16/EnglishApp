@@ -427,84 +427,88 @@ class PlacementTestViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['post'])
     def evaluate(self, request):
-        results = request.data.get('results')  # List of {question_id, user_answer, correct_answer, level}
-        if not results:
-            return Response({'error': 'Results required'}, status=status.HTTP_400_BAD_REQUEST)
-            
         try:
-            evaluation_prompt = f"""
-            Analyze these English placement test results and determine the most accurate CEFR level (A1, A2, B1, B2, or C1).
-            Results: {results}
-            Return strictly in this JSON format:
-            {{
-                "level": "B2",
-                "summary": "..."
-            }}
-            Return ONLY the raw JSON.
-            """
-
-            # FAST TRACK: Try only the fastest model for evaluation
-            api_key = getattr(settings, 'GEMINI_API_KEY', None)
-            genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash-8b')
-            # Timeout of 5 seconds to avoid hanging
-            response = model.generate_content(evaluation_prompt)
-            text = response.text
-            
-            # Extract JSON from potential markdown
-            json_match = re.search(r'\{.*\}', text, re.DOTALL)
-            if json_match:
-                text = json_match.group(0)
-            
-            data = None
+            results = request.data.get('results')  # List of {question_id, user_answer, correct_answer, level}
+            if not results:
+                return Response({'error': 'Results required'}, status=status.HTTP_400_BAD_REQUEST)
+                
             try:
-                data = json.loads(text.strip())
-            except json.JSONDecodeError:
-                match = re.search(r'\{.*\}', text, re.DOTALL)
-                if match:
-                    data = json.loads(match.group(0))
-                else:
-                    raise Exception("Could not parse AI evaluation")
-            
-            level = data.get('level', 'A1')
-            
-            # Update user profile
-            profile = Profile.objects.get(user=request.user)
-            profile.level = level
-            profile.has_completed_placement_test = True
-            profile.save()
-            
-            return Response({
-                'level': level,
-                'summary': data.get('summary', ''),
-                'message': f"Congratulations! Your assigned level is {level}."
-            })
-        except Exception as e:
-            error_str = str(e)
-            print(f"AI Evaluation Failed, using logic fallback: {error_str}")
-            
-            # LOGIC FALLBACK: Calculate level based on correct answers
-            correct_count = 0
-            for res in results:
-                if res.get('user_answer') == res.get('correct_answer'):
-                    correct_count += 1
-            
-            # Simple threshold mapping
-            if correct_count >= 13: assigned_level = "C1"
-            elif correct_count >= 10: assigned_level = "B2"
-            elif correct_count >= 7: assigned_level = "B1"
-            elif correct_count >= 4: assigned_level = "A2"
-            else: assigned_level = "A1"
-            
-            # Update profile
-            profile = Profile.objects.get(user=request.user)
-            profile.level = assigned_level
-            profile.has_completed_placement_test = True
-            profile.save()
-            
-            return Response({
-                'level': assigned_level,
-                'summary': f"Based on your score of {correct_count}/15, you have been placed in {assigned_level}.",
-                'message': f"Evaluation complete! Your level is {assigned_level}."
-            })
+                evaluation_prompt = f"""
+                Analyze these English placement test results and determine the most accurate CEFR level (A1, A2, B1, B2, or C1).
+                Results: {results}
+                Return strictly in this JSON format:
+                {{
+                    "level": "B2",
+                    "summary": "..."
+                }}
+                Return ONLY the raw JSON.
+                """
+
+                # FAST TRACK: Try only the fastest model for evaluation
+                api_key = getattr(settings, 'GEMINI_API_KEY', None)
+                genai.configure(api_key=api_key)
+                model = genai.GenerativeModel('gemini-1.5-flash-8b')
+                # Strict timeout via prompt instruction isn't real, but fallback will catch it
+                response = model.generate_content(evaluation_prompt)
+                text = response.text
+                
+                # Extract JSON from potential markdown
+                json_match = re.search(r'\{.*\}', text, re.DOTALL)
+                if json_match:
+                    text = json_match.group(0)
+                
+                data = None
+                try:
+                    data = json.loads(text.strip())
+                except json.JSONDecodeError:
+                    match = re.search(r'\{.*\}', text, re.DOTALL)
+                    if match:
+                        data = json.loads(match.group(0))
+                    else:
+                        raise Exception("Could not parse AI evaluation")
+                
+                level = data.get('level', 'A1')
+                
+                # Update user profile - Use get_or_create for safety
+                profile, created = Profile.objects.get_or_create(user=request.user)
+                profile.level = level
+                profile.has_completed_placement_test = True
+                profile.save()
+                
+                return Response({
+                    'level': level,
+                    'summary': data.get('summary', ''),
+                    'message': f"Congratulations! Your assigned level is {level}."
+                })
+            except Exception as e:
+                error_str = str(e)
+                print(f"AI Evaluation Failed, using logic fallback: {error_str}")
+                
+                # LOGIC FALLBACK: Calculate level based on correct answers
+                correct_count = 0
+                for res in results:
+                    # Defensive check for res structure
+                    if isinstance(res, dict) and res.get('user_answer') == res.get('correct_answer'):
+                        correct_count += 1
+                
+                # Simple threshold mapping
+                if correct_count >= 13: assigned_level = "C1"
+                elif correct_count >= 10: assigned_level = "B2"
+                elif correct_count >= 7: assigned_level = "B1"
+                elif correct_count >= 4: assigned_level = "A2"
+                else: assigned_level = "A1"
+                
+                # Update profile - Use get_or_create for safety
+                profile, created = Profile.objects.get_or_create(user=request.user)
+                profile.level = assigned_level
+                profile.has_completed_placement_test = True
+                profile.save()
+                
+                return Response({
+                    'level': assigned_level,
+                    'summary': f"Based on your score of {correct_count}/15, you have been placed in {assigned_level}.",
+                    'message': f"Evaluation complete! Your level is {assigned_level}."
+                })
+        except Exception as global_e:
+            return Response({'error': f"Critical Evaluation Error: {str(global_e)}"}, status=status.HTTP_400_BAD_REQUEST)
 
