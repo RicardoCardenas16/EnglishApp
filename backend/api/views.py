@@ -355,7 +355,7 @@ class PlacementTestViewSet(viewsets.ViewSet):
             raise Exception("AI configuration missing")
             
         genai.configure(api_key=api_key)
-        models_to_try = ['gemini-1.5-flash', 'gemini-flash-latest', 'gemini-2.0-flash-lite-preview-02-05', 'gemini-pro-latest']
+        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-1.5-pro', 'gemini-pro']
         
         last_error = None
         for model_name in models_to_try:
@@ -375,19 +375,9 @@ class PlacementTestViewSet(viewsets.ViewSet):
     def generate(self, request):
         try:
             prompt = """
-            Generate an English placement test for a new student. 
-            Return a JSON array of 15 multiple-choice questions. 
-            The questions should vary in difficulty, covering A1, A2, B1, B2, and C1 levels.
-            Include questions on grammar, vocabulary, and reading comprehension.
-            Format each item exactly like this:
-            {
-                "id": 1,
-                "question": "Choose the correct form: She ___ to the gym every day.",
-                "options": ["go", "goes", "going", "gone"],
-                "answer": "goes",
-                "level": "A1"
-            }
-            Return ONLY the raw JSON array. No extra text, no markdown markers.
+            Create 15 multiple-choice English questions (A1 to C1).
+            Return ONLY a raw JSON array of objects:
+            {"id": 1, "question": "...", "options": ["A", "B", "C", "D"], "answer": "correct_option", "level": "A1"}
             """
             
             text = self._generate_with_fallback(prompt)
