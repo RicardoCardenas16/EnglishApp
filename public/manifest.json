@@ -3,9 +3,9 @@
     "name": "English Journey: B2 Mastery",
     "icons": [
         {
-            "src": "logo.svg",
-            "type": "image/svg+xml",
-            "sizes": "any"
+            "src": "logo.jpg",
+            "type": "image/jpeg",
+            "sizes": "512x512"
         }
     ],
     "start_url": ".",
