@@ -53,11 +53,15 @@ const Login = () => {
 
                 {/* Hero Section */}
                 <div className="flex flex-col items-center px-6 pt-8 pb-4">
-                    <div className="bg-primary/10 p-4 rounded-full mb-6">
-                        <span className="material-symbols-outlined text-primary text-5xl">school</span>
+                    <div className="mb-6">
+                        <img
+                            src="/logo.jpg"
+                            alt="Chori Logo"
+                            className="w-24 h-24 rounded-3xl shadow-xl object-cover border-4 border-white dark:border-gray-800"
+                        />
                     </div>
                     <h1 className="text-[#111318] dark:text-white tracking-tight text-3xl font-bold leading-tight text-center pb-3">
-                        Welcome to English Journey
+                        EnglishApp by Chori
                     </h1>
                     <p className="text-[#616f89] dark:text-gray-400 text-base font-normal leading-relaxed text-center px-4">
                         Master Reading, Writing, Listening, and Speaking across all levels (A1 to B2).
