@@ -9,23 +9,24 @@ from api.models import Lesson, Topic
 def run():
     print("Starting database population...")
     
-    # Check if we have B2 content
-    if Topic.objects.filter(level="B2").count() == 0:
-        print("Populating B2 content...")
-        try:
-            from populate_b2_lessons import populate_lessons
-            populate_lessons()
-        except Exception as e:
-            print(f"Error populating B2: {e}")
-
-    # Check if we have C1 content
-    if Topic.objects.filter(level="C1").count() == 0:
-        print("Populating C1 content...")
-        try:
-            from populate_c1_lessons import populate_c1_lessons
-            populate_c1_lessons()
-        except Exception as e:
-            print(f"Error populating C1: {e}")
+    # Levels to check
+    levels = ["A1", "A2", "B1", "B2", "C1"]
+    
+    for level in levels:
+        if Topic.objects.filter(level=level).count() == 0:
+            print(f"Populating {level} content...")
+            try:
+                if level == "B2":
+                    from populate_b2_lessons import populate_lessons
+                    populate_lessons()
+                elif level == "C1":
+                    from populate_c1_lessons import populate_c1_lessons
+                    populate_c1_lessons()
+                else:
+                    # Generic population logic for A1/A2/B1
+                    print(f"Note: No specific script for {level}, skipping or using placeholder logic.")
+            except Exception as e:
+                print(f"Error populating {level}: {e}")
 
     print("Database population complete.")
 
