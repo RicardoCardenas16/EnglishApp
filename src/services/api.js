@@ -1,4 +1,4 @@
-
+// Version: 1.0.5 - Detailed Error Tracking
 const API_URL = 'https://englishbackend-wygz.onrender.com/api';
 
 export const loginUser = async (username, password) => {
@@ -12,7 +12,26 @@ export const loginUser = async (username, password) => {
         });
 
         if (!response.ok) {
-            throw new Error('Login failed');
+            let errorData;
+            try {
+                errorData = await response.json();
+            } catch (e) {
+                // If it's not JSON, it might be an HTML error page or plain text
+                const text = await response.text().catch(() => 'No response body');
+                throw new Error(`Server Error (${response.status}): ${text.substring(0, 50)}...`);
+            }
+
+            // Extract the most descriptive error message from DRF format
+            let msg = `Login failed (${response.status})`;
+            if (errorData.error) msg = errorData.error;
+            else if (errorData.detail) msg = errorData.detail;
+            else if (errorData.non_field_errors) msg = errorData.non_field_errors[0];
+            else if (typeof errorData === 'object' && Object.keys(errorData).length > 0) {
+                const firstKey = Object.keys(errorData)[0];
+                const val = errorData[firstKey];
+                msg = Array.isArray(val) ? `${firstKey}: ${val[0]}` : `${firstKey}: ${val}`;
+            }
+            throw new Error(msg);
         }
 
         const data = await response.json();
@@ -41,8 +60,24 @@ export const registerUser = async (fullName, username, password) => {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Registration failed');
+            let errorData;
+            try {
+                errorData = await response.json();
+            } catch (e) {
+                const text = await response.text().catch(() => 'No response body');
+                throw new Error(`Registration Server Error (${response.status}): ${text.substring(0, 50)}...`);
+            }
+
+            let msg = `Registration failed (${response.status})`;
+            if (errorData.error) msg = errorData.error;
+            else if (errorData.detail) msg = errorData.detail;
+            else if (errorData.non_field_errors) msg = errorData.non_field_errors[0];
+            else if (typeof errorData === 'object' && Object.keys(errorData).length > 0) {
+                const firstKey = Object.keys(errorData)[0];
+                const val = errorData[firstKey];
+                msg = Array.isArray(val) ? `${firstKey}: ${val[0]}` : `${firstKey}: ${val}`;
+            }
+            throw new Error(msg);
         }
 
         const data = await response.json();

@@ -17,13 +17,19 @@ const Login = () => {
             // For MVP, if input is 'admin', use 'admin'. Else use email as username.
             const userToUse = email === 'admin@example.com' ? 'admin' : email;
 
-            // If full name is provided, assume registration intent or auto-register fallback
+            // If full name is provided, assume registration intent
             if (fullName) {
                 try {
                     await registerUser(fullName, userToUse, password);
                 } catch (regError) {
-                    console.warn("Registration failed or user exists, trying login...", regError);
-                    await loginUser(userToUse, password);
+                    console.warn("Registration attempt failed:", regError.message);
+                    // Only try login if user already exists
+                    if (regError.message.toLowerCase().includes('exist') || regError.message.toLowerCase().includes('already')) {
+                        await loginUser(userToUse, password);
+                    } else {
+                        // Re-throw if it's a real server error or validation error
+                        throw regError;
+                    }
                 }
             } else {
                 await loginUser(userToUse, password);
@@ -32,8 +38,9 @@ const Login = () => {
             navigate('/dashboard');
         } catch (error) {
             console.error('Final login error:', error);
-            // Show the actual error message to the user
-            alert(`Login/Register failed: ${error.message}`);
+            // Show the actual error message or the error object itself stringified
+            const errorMessage = error.message || JSON.stringify(error);
+            alert(`[System Notice] ${errorMessage}`);
         }
     };
 
@@ -63,8 +70,9 @@ const Login = () => {
                     <h1 className="text-[#111318] dark:text-white tracking-tight text-3xl font-bold leading-tight text-center pb-3">
                         EnglishApp by Chori
                     </h1>
-                    <p className="text-[#616f89] dark:text-gray-400 text-base font-normal leading-relaxed text-center px-4">
-                        Master Reading, Writing, Listening, and Speaking across all levels (A1 to B2).
+                    <p className="text-[#616f89] dark:text-gray-400 text-sm font-normal leading-relaxed text-center px-4">
+                        Master Reading, Writing, Listening, and Speaking across all levels (A1 to B2).<br />
+                        <span className="text-[10px] opacity-30">V1.0.6 - Debug Ready</span>
                     </p>
                 </div>
 
