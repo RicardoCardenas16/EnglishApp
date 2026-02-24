@@ -27,6 +27,7 @@ const LessonDetail = () => {
     const [vocabQuizSubmitted, setVocabQuizSubmitted] = useState(false);
     const [quizScore, setQuizScore] = useState(0);
     const [showVocabModule, setShowVocabModule] = useState(false); // To toggle module visibility
+    const [vocabError, setVocabError] = useState(null);
 
     // Audio & Interaction State
     const [isPlaying, setIsPlaying] = useState(false);
@@ -186,18 +187,26 @@ const LessonDetail = () => {
     const handleVocabReview = async () => {
         if (vocabList.length === 0) return;
         setEvaluating(true);
+        setVocabError(null);
         try {
             const data = await evaluateWriting(vocabList.join(', '), 'Vocabulary Definitions', 'vocabulary');
             let defs = [];
             try {
                 // If backend returns object directly (DRF Parser) or string
                 defs = typeof data.feedback === 'string' ? JSON.parse(data.feedback) : data.feedback;
+
+                if (!Array.isArray(defs) || defs.length === 0) {
+                    throw new Error(typeof data.feedback === 'string' ? data.feedback : "The AI didn't return a proper list of definitions.");
+                }
+
+                setVocabDefinitions(defs);
             } catch (e) {
                 console.error("JSON Parse error", e);
+                setVocabError(e.message || "Failed to parse definitions.");
+                setVocabDefinitions([]);
             }
-            setVocabDefinitions(Array.isArray(defs) ? defs : []);
         } catch (e) {
-            alert("Error generating vocabulary: " + e.message);
+            setVocabError(e.message || "Error reaching the AI examiner.");
         } finally {
             setEvaluating(false);
         }
@@ -206,19 +215,23 @@ const LessonDetail = () => {
     const handleVocabQuiz = async () => {
         if (vocabList.length === 0) return;
         setEvaluating(true);
+        setVocabError(null);
         try {
             const data = await evaluateWriting(vocabList.join(', '), 'Vocabulary Quiz', 'vocab_quiz');
-            let quiz = [];
             try {
-                quiz = typeof data.feedback === 'string' ? JSON.parse(data.feedback) : data.feedback;
+                const quiz = typeof data.feedback === 'string' ? JSON.parse(data.feedback) : data.feedback;
+                if (!Array.isArray(quiz) || quiz.length === 0) {
+                    throw new Error(typeof data.feedback === 'string' ? data.feedback : "The AI didn't return a proper quiz.");
+                }
+                setVocabQuiz(quiz);
             } catch (e) {
-                console.error("JSON Parse error", e);
+                setVocabError(e.message || "Failed to parse quiz.");
+                setVocabQuiz([]);
             }
-            setVocabQuiz(Array.isArray(quiz) ? quiz : []);
             setVocabQuizSubmitted(false);
             setVocabQuizAnswers({});
         } catch (e) {
-            alert("Error generating quiz: " + e.message);
+            setVocabError(e.message || "Error reaching the AI examiner.");
         } finally {
             setEvaluating(false);
         }
@@ -824,9 +837,17 @@ const LessonDetail = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="text-center py-10">
-                                            <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">sentiment_dissatisfied</span>
-                                            <p className="text-slate-500">The AI examiner didn't return any definitions. Please try selecting the words again.</p>
+                                        <div className="flex flex-col items-center justify-center p-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-2xl animate-fade-in text-slate-500">
+                                            <span className="material-symbols-outlined text-5xl mb-3 text-red-400">error</span>
+                                            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                                                {vocabError || "The AI examiner didn't return any definitions. Please try selecting the words again."}
+                                            </p>
+                                            <button
+                                                onClick={() => { setVocabDefinitions(null); setVocabError(null); }}
+                                                className="mt-4 text-xs bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-sm hover:shadow-md transition-all border border-slate-200 dark:border-slate-700"
+                                            >
+                                                Try Again
+                                            </button>
                                         </div>
                                     )}
                                 </div>
@@ -858,18 +879,20 @@ const LessonDetail = () => {
                                                             if (vocabQuizSubmitted) {
                                                                 if (isCorrect) btnClass += "bg-green-100 border-green-500 text-green-800";
                                                                 else if (isSelected) btnClass += "bg-red-100 border-red-500 text-red-800";
-                                                                else btnClass += "bg-slate-50 border-slate-200 opacity-50";
+                                                                else btnClass += "opacity-50 border-slate-200";
                                                             } else {
-                                                                if (isSelected) btnClass += "bg-purple-50 border-purple-500 text-purple-900";
-                                                                else btnClass += "bg-slate-50 border-slate-200 hover:bg-slate-100";
+                                                                btnClass += isSelected ? "bg-purple-50 border-purple-500 text-purple-700 font-medium" : "bg-slate-50 hover:bg-slate-100 border-slate-200";
                                                             }
 
                                                             return (
                                                                 <button
                                                                     key={oIdx}
-                                                                    onClick={() => !vocabQuizSubmitted && setVocabQuizAnswers(prev => ({ ...prev, [idx]: opt }))}
+                                                                    onClick={() => {
+                                                                        if (!vocabQuizSubmitted) {
+                                                                            setVocabQuizAnswers(prev => ({ ...prev, [idx]: opt }));
+                                                                        }
+                                                                    }}
                                                                     className={btnClass}
-                                                                    disabled={vocabQuizSubmitted}
                                                                 >
                                                                     {opt}
                                                                 </button>
@@ -878,31 +901,40 @@ const LessonDetail = () => {
                                                     </div>
                                                 </div>
                                             ))}
+
+                                            {!vocabQuizSubmitted && (
+                                                <button
+                                                    disabled={Object.keys(vocabQuizAnswers).length < vocabQuiz.length}
+                                                    onClick={() => {
+                                                        let s = 0;
+                                                        vocabQuiz.forEach((q, idx) => {
+                                                            if (vocabQuizAnswers[idx] === q.correct_answer) s++;
+                                                        });
+                                                        setQuizScore(s);
+                                                        setVocabQuizSubmitted(true);
+                                                    }}
+                                                    className="w-full bg-primary text-white py-4 rounded-2xl shadow-lg font-bold disabled:opacity-50"
+                                                >
+                                                    Check Results
+                                                </button>
+                                            )}
                                         </>
                                     ) : (
-                                        <div className="text-center py-10">
-                                            <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">quiz</span>
-                                            <p className="text-slate-500">Could not generate a quiz for these words. Try different words.</p>
+                                        <div className="flex flex-col items-center justify-center p-8 text-center bg-slate-50 dark:bg-slate-800/50 rounded-2xl animate-fade-in text-slate-500">
+                                            <span className="material-symbols-outlined text-5xl mb-3 text-red-400">error</span>
+                                            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                                                {vocabError || "The AI examiner didn't return a proper quiz. Please try selecting the words again."}
+                                            </p>
+                                            <button
+                                                onClick={() => { setVocabQuiz(null); setVocabError(null); }}
+                                                className="mt-4 text-xs bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-sm hover:shadow-md transition-all border border-slate-200 dark:border-slate-700"
+                                            >
+                                                Try Again
+                                            </button>
                                         </div>
                                     )}
 
-                                    {!vocabQuizSubmitted ? (
-                                        <button
-                                            onClick={() => {
-                                                setVocabQuizSubmitted(true);
-                                                // Calculate score
-                                                let s = 0;
-                                                vocabQuiz.forEach((q, i) => {
-                                                    if (vocabQuizAnswers[i] === q.correct_answer) s++;
-                                                });
-                                                setQuizScore(s);
-                                            }}
-                                            className="w-full bg-green-600 text-white py-3 rounded-xl font-bold shadow hover:bg-green-700"
-                                            disabled={Object.keys(vocabQuizAnswers).length < vocabQuiz.length}
-                                        >
-                                            Check Answers
-                                        </button>
-                                    ) : (
+                                    {vocabQuizSubmitted && (
                                         <button
                                             onClick={() => { setVocabQuiz(null); setVocabQuizSubmitted(false); }}
                                             className="w-full bg-slate-200 text-slate-800 py-3 rounded-xl font-bold hover:bg-slate-300"

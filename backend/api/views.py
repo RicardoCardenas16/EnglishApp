@@ -287,12 +287,14 @@ class WritingEvaluationViewSet(viewsets.ViewSet):
 
             # List of models to try in order of preference/speed
             # prioritizing 'gemini-flash-latest' as it was confirmed working in tests
-            # Updated models_to_try: Prioritize Pro for quality as requested by user with paid tier
+            # Updated models_to_try: Use 2026 available models based on list_models check
             models_to_try = [
-                'gemini-1.5-pro',      # Best quality, user's preference for paid tier
-                'gemini-1.5-flash',    # Extremely fast, good as fallback
-                'gemini-1.5-flash-8b', # Mini model, ultra fast
-                'gemini-pro'           # Legacy pro
+                'gemini-pro-latest',   # Reliable Pro alias
+                'gemini-flash-latest', # Reliable Flash alias
+                'gemini-2.5-pro',      # New flagship 
+                'gemini-2.0-flash',    # Faster 2.0
+                'gemini-1.5-pro',      # Legacy fallback
+                'gemini-1.5-flash',    # Legacy fallback
             ]
             
             response = None
@@ -320,20 +322,24 @@ class WritingEvaluationViewSet(viewsets.ViewSet):
             
             if submission_type in ['vocabulary', 'vocab_quiz']:
                 # ROBUST JSON EXTRACTION: Use regex to find the first Array or Object block
+                # Specifically targeting markdown json blocks if present
                 import re
                 try:
-                    # Look for anything between [ ] or { }
-                    json_match = re.search(r'\[.*\]|\{.*\}', feedback_text, re.DOTALL)
-                    if json_match:
-                        cleaned_json = json_match.group(0)
-                        # Verify it's actually valid JSON before returning
-                        json.loads(cleaned_json) 
-                        return Response({
-                            'feedback': cleaned_json,
-                            'score': None
-                        })
+                    # Try to find content within ```json ... ``` first
+                    md_match = re.search(r'```json\s*((\[|\{).*?(\]|\}))\s*```', feedback_text, re.DOTALL | re.IGNORECASE)
+                    if md_match:
+                        cleaned_json = md_match.group(1)
                     else:
-                        raise ValueError("No JSON block found in AI response")
+                        # Fallback to general [ ] or { } search
+                        json_match = re.search(r'(\[|\{).*?(\]|\})', feedback_text, re.DOTALL)
+                        cleaned_json = json_match.group(0) if json_match else feedback_text
+                    
+                    # Verify it's actually valid JSON before returning
+                    json.loads(cleaned_json) 
+                    return Response({
+                        'feedback': cleaned_json,
+                        'score': None
+                    })
                 except Exception as json_e:
                     print(f"JSON Parsing failed: {json_e}. Raw text: {feedback_text}")
                     # If parsing fails, try one more simple strip of markdown
@@ -383,7 +389,8 @@ class PlacementTestViewSet(viewsets.ViewSet):
             
         genai.configure(api_key=api_key)
         # Prioritize Pro as requested by user
-        models_to_try = ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-pro']
+        # Use 2026 stable aliases
+        models_to_try = ['gemini-pro-latest', 'gemini-flash-latest', 'gemini-2.5-pro', 'gemini-2.0-flash']
         
         last_error = None
         for model_name in models_to_try:
