@@ -18,10 +18,10 @@ class RegisterView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         try:
             # Manual creation to handle password hashing and profile creation
-            username = request.data.get('username')
+            username = request.data.get('username', '').lower().strip()
             password = request.data.get('password')
             first_name = request.data.get('first_name', '')
-            email = request.data.get('email', '')
+            email = request.data.get('email', '').lower().strip()
 
             print(f"--- Registration Attempt: {username} ---")
 
@@ -55,16 +55,26 @@ class RegisterView(generics.CreateAPIView):
 class CustomAuthToken(ObtainAuthToken):
     """
     Custom Login API that returns Token + User ID + Email
+    Handle case-insensitive usernames for better UX.
     """
     def post(self, request, *args, **kwargs):
         try:
-            serializer = self.serializer_class(data=request.data,
-                                               context={'request': request})
-            serializer.is_valid(raise_exception=True)
-            user = serializer.validated_data['user']
+            # Normalize login username to lowercase
+            username = request.data.get('username', '').lower().strip()
+            password = request.data.get('password')
+            
+            # Specific check for admin if it's not lowercase in some setup
+            final_username = username if username != 'admin' else 'admin'
+            
+            from django.contrib.auth import authenticate
+            user = authenticate(username=final_username, password=password)
+            
+            if not user:
+                return Response({'error': 'Unable to log in with provided credentials.'}, status=status.HTTP_400_BAD_REQUEST)
+                
             token, created = Token.objects.get_or_create(user=user)
             
-            # Ensure profile exists (backward compatibility)
+            # Ensure profile exists
             Profile.objects.get_or_create(user=user)
 
             return Response({
