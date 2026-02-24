@@ -433,7 +433,7 @@ const LessonDetail = () => {
 
                             <audio
                                 ref={audioRef}
-                                src={content.audio_url}
+                                src={content.audio_url ? (content.audio_url.startsWith('http') ? content.audio_url : `https://englishbackend-wygz.onrender.com${content.audio_url}`) : ''}
                                 onTimeUpdate={handleTimeUpdate}
                                 onEnded={() => setIsPlaying(false)}
                                 onPlay={() => setIsPlaying(true)}
@@ -756,7 +756,13 @@ const LessonDetail = () => {
                                 <span className="material-symbols-outlined text-indigo-500">menu_book</span>
                                 Vocabulary Builder
                             </h3>
-                            <button onClick={() => setShowVocabModule(false)} className="size-8 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center">
+                            <button onClick={() => {
+                                setShowVocabModule(false);
+                                // Optional: Reset to selection state when closing
+                                setVocabDefinitions(null);
+                                setVocabQuiz(null);
+                                setVocabError(null);
+                            }} className="size-8 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center">
                                 <span className="material-symbols-outlined text-sm">close</span>
                             </button>
                         </div>
@@ -818,7 +824,7 @@ const LessonDetail = () => {
                                 </div>
                             ) : vocabDefinitions ? (
                                 <div className="space-y-4 animate-fade-in">
-                                    <button onClick={() => setVocabDefinitions(null)} className="text-sm text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1 mb-4 hover:underline">
+                                    <button onClick={() => { setVocabDefinitions(null); setVocabError(null); }} className="text-sm text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1 mb-4 hover:underline">
                                         <span className="material-symbols-outlined text-sm">arrow_back</span> Back to Selection
                                     </button>
 

@@ -67,7 +67,16 @@ class CustomAuthToken(ObtainAuthToken):
             final_username = username if username != 'admin' else 'admin'
             
             from django.contrib.auth import authenticate
-            user = authenticate(username=final_username, password=password)
+            from django.contrib.auth.models import User
+            
+            # Find the actual user case-insensitively first
+            try:
+                found_user = User.objects.get(username__iexact=final_username)
+                actual_username = found_user.username
+            except User.DoesNotExist:
+                actual_username = final_username # Fallback to input
+            
+            user = authenticate(username=actual_username, password=password)
             
             if not user:
                 return Response({'error': 'Unable to log in with provided credentials.'}, status=status.HTTP_400_BAD_REQUEST)
