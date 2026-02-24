@@ -12,14 +12,37 @@ const PlacementTest = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const checkStatus = async () => {
+            try {
+                const dashboardData = await fetchDashboardData();
+                if (dashboardData.profile && dashboardData.profile.has_completed_placement_test) {
+                    console.log("User already completed placement test. Redirecting...");
+                    navigate('/dashboard');
+                }
+            } catch (e) {
+                console.warn("Could not verify status, proceeding with intro.");
+            }
+        };
+
+        if (step === 'intro') {
+            checkStatus();
+        }
+
         if (step === 'testing' && questions.length === 0) {
             startTest();
         }
-    }, [step]);
+    }, [step, navigate]);
 
     const startTest = async () => {
         setLoading(true);
         try {
+            // Re-verify status just before starting to avoid redundant tests
+            const statusCheck = await fetchDashboardData().catch(() => ({}));
+            if (statusCheck.profile && statusCheck.profile.has_completed_placement_test) {
+                navigate('/dashboard');
+                return;
+            }
+
             const data = await generatePlacementTest();
             setQuestions(data);
             setLoading(false);
