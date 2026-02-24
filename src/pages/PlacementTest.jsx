@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { generatePlacementTest, evaluatePlacementTest } from '../services/api';
+import { generatePlacementTest, evaluatePlacementTest, fetchDashboardData } from '../services/api';
 
 const PlacementTest = () => {
     const [step, setStep] = useState('intro'); // intro, testing, evaluating, result
